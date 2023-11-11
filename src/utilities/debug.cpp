@@ -1,6 +1,7 @@
 #include "debug.hpp"
 #include "iostream"
 
+
 void report_vm_error(const char *file, int line,
                      const char *err_msg,
                      const char *detail_msg) {
