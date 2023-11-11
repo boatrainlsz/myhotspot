@@ -1,26 +1,22 @@
 #include "iostream"
 #include "src/utilities/debug.hpp"
+#include "src/os/linux.hpp"
+#include "src/runtime/timer.hpp"
 #include "stdio.h"
+#include "unistd.h"
 #include "sstream"
 #include "stdarg.h"
 #include "string.h"
 #include "src/utilities/globalDefinitions.hpp"
 
-void err_msg(bool exp, const char *format, ...) {
-    const int bufsz = 256;
-    char _buf[bufsz];
-    va_list argp;
-    va_start(argp, format);
-    vsnprintf(_buf, bufsz, format, argp);
-    va_end(argp);
-    assert(exp, _buf);
-}
-
 int main() {
-    size_t len = 1;
-//    printf("len=" SIZE_FORMAT "\n", len);
-//    printf("len=" PTR_FORMAT "\n", 1111);
-//    err_msg(0,"len=" SIZE_FORMAT "\n", len);
-    FormatBuffer<> f("len" PTR_FORMAT "\n", len);
+    Linux::init();
+    {
+        elapsedTimer t;
+        t.start();
+        sleep(5);
+        t.stop();
+        std::cout << t.seconds() << std::endl;
+    }
     return 0;
 }
