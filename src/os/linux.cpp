@@ -1,5 +1,6 @@
 #include "linux.hpp"
 #include "dlfcn.h"
+#include "sys/time.h"
 #include "../utilities/debug.hpp"
 
 static long initial_time_count = 0;
@@ -36,4 +37,11 @@ long Linux::javaTimeNanos() {
 
 long Linux::elapsed_counter() {
     return javaTimeNanos() - initial_time_count;
+}
+
+long Linux::javaTimeMillis() {
+    timeval time;
+    int status = gettimeofday(&time, NULL);
+    assert(status != -1, "linux error!");
+    return long(time.tv_sec) * (1000) + long(time.tv_usec / 1000);
 }

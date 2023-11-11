@@ -12,11 +12,8 @@
 int main() {
     Linux::init();
     {
-        elapsedTimer t;
-        t.start();
+        TraceTime t("sleep");
         sleep(5);
-        t.stop();
-        std::cout << t.seconds() << std::endl;
     }
     return 0;
 }

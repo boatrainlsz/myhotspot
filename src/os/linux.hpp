@@ -11,6 +11,8 @@ public:
 
     static long javaTimeNanos();
 
+    static long javaTimeMillis();
+
     static void init();
 
     static long elapsed_counter();

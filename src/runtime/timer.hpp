@@ -13,4 +13,14 @@ public:
     double seconds();
 };
 
+class TraceTime {
+private:
+    elapsedTimer timer;
+    char *title;
+public:
+    TraceTime(char *title);
+
+    ~TraceTime();
+};
+
 #endif
