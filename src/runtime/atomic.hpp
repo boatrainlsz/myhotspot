@@ -38,6 +38,15 @@ public:
                 : "r" (dst)
                 :"cc", "memory");
     }
+
+    static jint xchg(jint exchange_value, volatile jint *dst) {
+        __asm__ volatile(
+                "xchgl(%2),%0"
+                : "=r" (exchange_value)
+                : "0" (exchange_value), "r"(dst)
+                : "memory");
+        return exchange_value;
+    }
 };
 
 #endif

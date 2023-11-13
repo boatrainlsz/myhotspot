@@ -2,6 +2,7 @@
 #define  OS_LINUX
 
 #include "time.h"
+#include "../prims/jni.h"
 
 class Linux {
 public:
@@ -16,6 +17,8 @@ public:
     static void init();
 
     static long elapsed_counter();
+
+    static struct timespec *compute_abstime(timespec *abstime, jlong millis);
 };
 
 #endif

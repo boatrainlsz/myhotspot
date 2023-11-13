@@ -39,6 +39,25 @@ long Linux::elapsed_counter() {
     return javaTimeNanos() - initial_time_count;
 }
 
+struct timespec *Linux::compute_abstime(timespec *abstime, jlong millis) {
+    if (millis < 0) {
+        millis = 0;
+    }
+    jlong seconds = millis / 1000;
+    millis %= 1000;
+    struct timespec now;
+    int status = _clock_gettime(CLOCK_MONOTONIC, &now);
+    assert(status == 0, "gettime error!");
+    abstime->tv_sec = now.tv_sec + seconds;
+    long nanos = now.tv_nsec + millis * 1000 * 1000;
+    if (nanos >= 1000 * 1000 * 1000) {
+        abstime->tv_sec += 1;
+        nanos -= 1000 * 1000 * 1000;
+    }
+    abstime->tv_nsec = nanos;
+    return abstime;
+}
+
 long Linux::javaTimeMillis() {
     timeval time;
     int status = gettimeofday(&time, NULL);
